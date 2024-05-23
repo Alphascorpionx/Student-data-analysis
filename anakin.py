@@ -18,7 +18,7 @@ import io
 import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
-os.environ['API_KEY'] = 'AIzaSyCCVsCleZT6ir8Iluvzs7XYdLiS70gvKrQ'
+os.environ['API_KEY'] = "Your_API_Key"
 genAI.configure(api_key=os.environ['API_KEY'])
 
 # Initialize GenerativeModel
