@@ -24,8 +24,7 @@ genAI.configure(api_key=os.environ['API_KEY'])
    # Initialize GenerativeModel
 model = genAI.GenerativeModel('gemini-pro')
 
-    
-    response = model.generate_content(input_text)
+
 # Function to generate content
 @st.cache_data
 def generate_content(prompt, data):
