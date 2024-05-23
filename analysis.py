@@ -19,16 +19,16 @@ import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
 apikey=st.text_input("Google Ai API key: ")
-os.environ['API_KEY'] = apikey
-genAI.configure(api_key=os.environ['API_KEY'])
-   # Initialize GenerativeModel
-model = genAI.GenerativeModel('gemini-pro')
+
 
 
 # Function to generate content
 @st.cache_data
-def generate_content(prompt, data):
-   
+def generate_content(prompt, data, key):
+    os.environ['API_KEY'] = key
+    genAI.configure(api_key=os.environ['API_KEY'])
+   # Initialize GenerativeModel
+    model = genAI.GenerativeModel('gemini-pro')
     input_text = data + " " + prompt
     response = model.generate_content(input_text)
 
@@ -86,6 +86,7 @@ def main():
     )
 
     # Prompt input from user with illustration
+    apikey=st.text_input("Google Ai API key: ")
     st.subheader("Enter the prompt for analysis:")
     analysis_prompt = st.text_input("For example: 'Summarize the data.'", "")
 
@@ -135,7 +136,7 @@ def main():
     if analysis_prompt and q is not None:
         # Generate content
         try:
-            response = generate_content(analysis_prompt, q.to_string())
+            response = generate_content(analysis_prompt, q.to_string(),apikey)
             short=shorten(analysis_prompt)
             # Display generated content with colorful background and AI illustration
             st.subheader("Generated content:")
