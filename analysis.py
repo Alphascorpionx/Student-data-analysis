@@ -172,8 +172,7 @@ def main():
 
         except ValueError:
             st.error("Something unexpected happened, please try again")
-        except:
-            st.warning("Please use a smaller file")
+        
 
 if __name__ == "__main__":
     main()
