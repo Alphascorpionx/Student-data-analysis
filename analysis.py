@@ -18,7 +18,7 @@ import io
 import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
-apikey=st.text_input("Google Ai API key: ")
+
 
 
 
