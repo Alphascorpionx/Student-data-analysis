@@ -173,9 +173,7 @@ def main():
 
 
             # Copy to clipboard option
-            if st.button("Copy to Clipboard"):
-                pyperclip.copy(response)
-                st.success("Generated content copied to clipboard!")
+            
                 
         except ValueError:
             st.error("Something unexpected happened, please try again")
