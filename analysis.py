@@ -16,6 +16,9 @@ import tempfile
 import pyperclip
 import io
 import matplotlib.pyplot as plt
+import clipboard
+
+
 
 # Set Google Generative AI API key
 
@@ -173,6 +176,7 @@ def main():
             if st.button("Copy to Clipboard"):
                 pyperclip.copy(response)
                 st.success("Generated content copied to clipboard!")
+                clipboard.copy(response)
 
         except ValueError:
             st.error("Something unexpected happened, please try again")
