@@ -177,7 +177,7 @@ def main():
                 
         except ValueError:
             st.error("Something unexpected happened, please try again")
-        except InternalServerError:
+        except:
             st.warning("please use a smaller file")
         
 
