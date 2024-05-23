@@ -177,6 +177,12 @@ def main():
                 pyperclip.copy(response)
                 st.success("Generated content copied to clipboard!")
                 clipboard.copy(response)
+            try:
+                pyperclip.copy(response)
+            except pyperclip.PyperclipException as e:
+                st.error("Failed to copy to clipboard. Please try manually copying the text.")
+               # Log the exception details if necessary
+                print(f"Clipboard error: {e}")
 
         except ValueError:
             st.error("Something unexpected happened, please try again")
