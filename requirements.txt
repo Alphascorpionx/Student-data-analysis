@@ -5,3 +5,8 @@ seaborn
 pyperclip
 os
 tempfile
+
+CREATING YOUR API KEY:
+Use the following link to generate your api key:
+https://aistudio.google.com/app/apikey
+once your key is created replace "your_api_key" in the code with Api key 
