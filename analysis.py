@@ -39,7 +39,11 @@ def generate_content(prompt, data, key):
         return ""
 
 @st.cache_data
-def shorten(prompt):
+def shorten(prompt, key):
+  os.environ['API_KEY'] = key
+  genAI.configure(api_key=os.environ['API_KEY'])
+   # Initialize GenerativeModel
+  model = genAI.GenerativeModel('gemini-pro')
   simplify=model.generate_content(prompt+"   "+"shorten this to 1-2 words")
   return simplify.text
 
@@ -137,7 +141,7 @@ def main():
         # Generate content
         try:
             response = generate_content(analysis_prompt, q.to_string(),apikey)
-            short=shorten(analysis_prompt)
+            short=shorten(analysis_prompt,apikey)
             # Display generated content with colorful background and AI illustration
             st.subheader("Generated content:")
             st.markdown(
