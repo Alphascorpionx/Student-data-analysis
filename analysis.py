@@ -18,11 +18,7 @@ import io
 import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
-os.environ['API_KEY'] = apikey
-genAI.configure(api_key=os.environ['API_KEY'])
 
-# Initialize GenerativeModel
-model = genAI.GenerativeModel('gemini-pro')
 
 # Function to generate content
 @st.cache_data
