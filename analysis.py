@@ -18,7 +18,7 @@ import io
 import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
-os.environ['API_KEY'] = "Your_API_Key"
+os.environ['API_KEY'] = apikey
 genAI.configure(api_key=os.environ['API_KEY'])
 
 # Initialize GenerativeModel
@@ -27,7 +27,14 @@ model = genAI.GenerativeModel('gemini-pro')
 # Function to generate content
 @st.cache_data
 def generate_content(prompt, data):
+    apikey=st.text_input("Google Ai API key: ")
     input_text = data + " " + prompt
+    os.environ['API_KEY'] = apikey
+    genAI.configure(api_key=os.environ['API_KEY'])
+   # Initialize GenerativeModel
+    model = genAI.GenerativeModel('gemini-pro')
+
+    
     response = model.generate_content(input_text)
 
     if response.text:  # Check if the response contains any text
