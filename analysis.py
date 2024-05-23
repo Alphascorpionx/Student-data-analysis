@@ -177,7 +177,7 @@ def main():
                 
         except ValueError:
             st.error("Something unexpected happened, please try again")
-        except google.api_core.exceptions.InternalServerError:
+        except InternalServerError:
             st.warning("please use a smaller file")
         
 
