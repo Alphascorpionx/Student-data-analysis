@@ -1,0 +1,7 @@
+pandas
+streamlit
+google-generativeai
+seaborn
+pyperclip
+os
+tempfile
