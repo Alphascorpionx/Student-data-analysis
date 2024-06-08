@@ -16,7 +16,7 @@ import tempfile
 import pyperclip
 import io
 import matplotlib.pyplot as plt
-import clipboard
+
 
 
 
