@@ -22,7 +22,8 @@ import matplotlib.pyplot as plt
 
 # Set Google Generative AI API key
 
-
+os.environ['API_KEY'] = 'YOUR KEY'
+genAI.configure(api_key=os.environ['API_KEY'])
 
 
 # Function to generate content
