@@ -17,15 +17,6 @@ import pyperclip
 import io
 import matplotlib.pyplot as plt
 
-
-
-
-# Set Google Generative AI API key
-
-os.environ['API_KEY'] = 'YOUR KEY'
-genAI.configure(api_key=os.environ['API_KEY'])
-
-
 # Function to generate content
 @st.cache_data
 def generate_content(prompt, data, key):
