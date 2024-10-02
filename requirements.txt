@@ -1,8 +1,17 @@
-pandas
-streamlit
-google-generativeai
-seaborn
-pyperclip
+streamlit as st
+import pandas as pd
+import os
+import google.generativeai as genAI
+import seaborn as sns
+import matplotlib.pyplot as plt
+from PyPDF2 import PdfReader
+import io
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+import tempfile
+
 
 
 
