@@ -67,12 +67,12 @@ def create_pdf(content, plot_image_path, student_id):
     content_paragraph = Paragraph("<b>Generated Content:</b>", styles['Title'])
     flowables.append(content_paragraph)
     flowables.append(Spacer(1, 12))
-    
+
     # Ensure text fits within margins and wrap correctly
     content_paragraph = Paragraph(content, styles['BodyText'])
     flowables.append(content_paragraph)
     flowables.append(Spacer(1, 24))
-    
+
     # Add plot image to the PDF
     if plot_image_path:
         flowables.append(Paragraph("Plot:", styles['Title']))
@@ -135,7 +135,7 @@ def main():
 
     q = None
     pdf_text = ""
-    file_ext = ""  # Initialize file_ext with a default value
+    file_ext = "" # Initialize file_ext with a default value
 
     if uploaded_file is not None:
         file_ext = uploaded_file.name.split('.')[-1].lower()
@@ -160,26 +160,47 @@ def main():
     if q is not None:
         if uploaded_file.name.endswith(('.csv', '.txt')):
             st.write("Plot graph")
+            x = st.selectbox("Select x-axis", q.columns.tolist())
 
-            student_column = st.selectbox("Select student column:", q.columns.tolist())
-            selected_student = st.selectbox("Select student:", q[student_column].unique().tolist())
+            y = st.multiselect("Select y-axis", q.columns.tolist())
 
-            student_data = q[q[student_column] == selected_student]
+            if x and y:
+               xy = st.multiselect("Select elements for x", q[x].tolist(), default=q[x].tolist())
 
-            x_columns = st.multiselect("Select x-axis columns:", student_data.columns.tolist())
-            y_columns = st.multiselect("Select y-axis columns:", student_data.columns.tolist())
+               # Filter DataFrame based on selected x-axis elements
+               filtered_q = q[q[x].isin(xy)]
 
-            if st.button("Generate Plot"):
-                plt.figure(figsize=(10, 5))
-                for y in y_columns:
-                    sns.scatterplot(data=student_data, x=x_columns, y=y, label=y)
-                plt.title(f"Scatter plot of {', '.join(y_columns)} vs {', '.join(x_columns)} for {selected_student}")
-                plt.legend(title="Y-axis")
-                
-                with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_image:
-                    plot_image_path = temp_image.name
-                    save_plot_image(plot_image_path)
-                    st.pyplot(plt)
+               # Plotting
+               if not filtered_q.empty:
+                  try:
+                    fig, ax = plt.subplots()
+                    filtered_q.plot(x=x, y=y, kind='line', ax=ax, marker='o')
+                    ax.set_title('Filtered Data Plot')
+                    ax.set_xlabel(x)
+                    ax.set_ylabel(', '.join(y))
+                    ax.tick_params(axis='both', labelsize=8)
+                    wew=st.radio("Annotations",options=["Hide", "View"])
+                    if wew=="View":
+                      for col in y:
+                       for i in range(filtered_q.shape[0]):
+                            ax.annotate(f'({filtered_q[x].iloc[i]}, {filtered_q[col].iloc[i]})',
+                                (i, filtered_q[col].iloc[i]),  # Using index `i` for positioning
+                                textcoords="offset points", xytext=(5, 5), ha='center')
+
+
+                  except KeyError:
+                    st.error("same column cannot be present on both axes")
+                  except TypeError:
+                    st.error("data must be numeric")
+
+                  # Save the plot as an image
+                  plot_image_path = tempfile.mktemp(suffix=".png")
+                  save_plot_image(plot_image_path)
+
+                  # Display the plot in Streamlit
+                  z = st.radio("Graph", ["View", "Hide"])
+                  if z == "View":
+                     st.pyplot(fig)
 
     if analysis_prompt and (q is not None or pdf_text):
         try:
@@ -187,7 +208,7 @@ def main():
                 response = generate_content(analysis_prompt, q.to_string(), apikey)
             else:
                 response = generate_content(analysis_prompt, pdf_text, apikey)
-                
+
             short = shorten(analysis_prompt, apikey)
             st.subheader("Generated content:")
             st.markdown(
@@ -200,12 +221,12 @@ def main():
             )
 
             if plot_image_path:
-                pdf_path = create_pdf(response, plot_image_path, selected_student)
+                pdf_path = create_pdf(response, plot_image_path, xy)
                 with open(pdf_path, "rb") as pdf_file:
                     st.download_button(
                         label="Download Report",
                         data=pdf_file,
-                        file_name=f"report_{selected_student}.pdf",
+                        file_name=f"{shorten(analysis_prompt,apikey)}.pdf",
                         mime="application/pdf"
                     )
 
