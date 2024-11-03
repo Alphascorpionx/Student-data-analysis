@@ -6,7 +6,7 @@ seaborn
 matplotlib
 PyPDF2
 reportlab
-tempfile
+
 
 
 
