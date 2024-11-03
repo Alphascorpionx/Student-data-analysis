@@ -1,7 +1,6 @@
 
 streamlit 
 pandas
-os
 google.generativeai
 seaborn
 matplotlib
