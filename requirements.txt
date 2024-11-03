@@ -1,13 +1,14 @@
-pip install streamlit
-pip install pandas
-pip install google.generativeai
-pip install matplotlib
-pip install PyPDF2
-pip install reportlab
-pip install tempfile
 
-
-
+streamlit 
+pandas
+os
+google.generativeai
+seaborn
+matplotlib
+PyPDF2
+io
+reportlab
+tempfile
 
 
 
